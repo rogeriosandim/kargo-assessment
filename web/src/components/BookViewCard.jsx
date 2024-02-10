@@ -7,7 +7,7 @@ import {
   CardActions,
   IconButton,
   Typography,
-  Collapse
+  Collapse,
 } from '@mui/material';
 import {
   Favorite as FavoriteIcon,
@@ -17,13 +17,12 @@ import styles from './styles.module.scss';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
 
-  
 const BookViewCard = ({ book }) => {
   const [expanded, setExpanded] = useState(false);
   const [favourite, setFavourite] = useState(false);
   const parsedDescription = parse(`${book.volumeInfo.description}`);
 
-    const handleExpandClick = () => {
+  const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
@@ -31,7 +30,7 @@ const BookViewCard = ({ book }) => {
     setFavourite(!favourite);
   };
 
-   return (
+  return (
     <Card className={styles.card}>
       <CardHeader
         className={styles.header}
@@ -39,9 +38,9 @@ const BookViewCard = ({ book }) => {
         subheader={book.volumeInfo.authors}
       />
       <CardMedia
-         id='image'
-         className={styles.media}
-         image={`https://books.google.com/books/publisher/content/images/frontcover/${book.id}?fife=w325-h355&source=gbs_api`}
+        id='image'
+        className={styles.media}
+        image={`https://books.google.com/books/publisher/content/images/frontcover/${book.id}?fife=w325-h355&source=gbs_api`}
       />
       <CardActions disableSpacing>
         <IconButton
