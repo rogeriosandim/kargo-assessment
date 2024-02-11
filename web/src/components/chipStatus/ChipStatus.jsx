@@ -1,21 +1,9 @@
 import { Chip as MuiChip } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 
-export const getStatusChip = (status) => {
-  let brandColor;
-
-  switch (status) {
-    case 'In Progress':
-      brandColor = '#0077FF';
-      break;
-    case 'Finished':
-      brandColor = '#00FF77';
-      break;
-    default:
-      brandColor = '#000'; // Default to black if status is not recognized
-  }
-
-  return <ChipStatus label={status} brand={brandColor} variant='outlined' />;
+const statusColorMap = {
+  'In Progress': '#0077FF',
+  Finished: '#00FF77',
 };
 
 const getChipStyles = ({ brand }) => {
@@ -28,12 +16,17 @@ const getChipStyles = ({ brand }) => {
   return defaultStyles;
 };
 
-const StyledChip = styled(MuiChip)((props) => ({
-  ...getChipStyles(props),
+const StyledChip = styled(MuiChip)(({ brand }) => ({
+  ...getChipStyles({ brand }),
 }));
 
 const ChipStatus = ({ ...props }) => {
   return <StyledChip {...props} />;
+};
+
+export const getStatusChip = (status) => {
+  const brandColor = statusColorMap[status] || '#000';
+  return <ChipStatus label={status} brand={brandColor} variant='outlined' />;
 };
 
 export default ChipStatus;
