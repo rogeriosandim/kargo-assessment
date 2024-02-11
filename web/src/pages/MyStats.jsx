@@ -38,7 +38,7 @@ const MyStatus = () => {
   return (
     <Box>
       <Typography variant='h4' gutterBottom>
-        My Status
+        My Stats
       </Typography>
       <Grid container spacing={3}>
         {Object.keys(bookStatusCount).map((count) => (
