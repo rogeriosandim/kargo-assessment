@@ -8,9 +8,10 @@ import {
   Container,
 } from '@mui/material';
 import {
+  InsightsOutlined,
   SearchOutlined,
   MenuBookOutlined,
-  FavoriteOutlined,
+  TrackChangesOutlined,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import kargoLogo from '../assets/images/KargoLogo.png';
@@ -39,6 +40,13 @@ const Header = ({ children }) => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex' }}>
             <Link to='/'>
+              <IconButton size='large' aria-label='My Stats' color='inherit'>
+                <Tooltip title='My Stats'>
+                  <InsightsOutlined />
+                </Tooltip>
+              </IconButton>
+            </Link>
+            <Link to='/search-book'>
               <IconButton size='large' aria-label='search book' color='inherit'>
                 <Tooltip title='Search Book'>
                   <SearchOutlined />
@@ -54,12 +62,10 @@ const Header = ({ children }) => {
                 </Tooltip>
               </IconButton>
             </Link>
-            <Link to='/favourites'>
-              <IconButton size='large' aria-label='my books' color='inherit'>
-                <Tooltip title='Favourites'>
-                  <Badge badgeContent={4} color='error'>
-                    <FavoriteOutlined />
-                  </Badge>
+            <Link to='/goals'>
+              <IconButton size='large' aria-label='goals' color='inherit'>
+                <Tooltip title='Goals'>
+                  <TrackChangesOutlined />
                 </Tooltip>
               </IconButton>
             </Link>

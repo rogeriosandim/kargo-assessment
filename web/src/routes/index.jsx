@@ -1,8 +1,9 @@
 import { Outlet, useRoutes } from 'react-router-dom';
-import Home from '../pages/Home';
-import MyReadingList from '../pages/MyReadingList';
 import Header from '../layouts/Header';
-import Favourites from '../pages/Favourites';
+import MyStats from '../pages/MyStats';
+import SearchBook from '../pages/SearchBook';
+import MyReadingList from '../pages/MyReadingList';
+import Goals from '../pages/Goals';
 
 const Router = () => {
   const routes = useRoutes([
@@ -13,9 +14,10 @@ const Router = () => {
         </Header>
       ),
       children: [
-        { element: <Home />, index: true },
+        { element: <MyStats />, index: true },
+        { path: '/search-book', element: <SearchBook /> },
         { path: '/my-reading-list', element: <MyReadingList /> },
-        { path: '/favourites', element: <Favourites /> },
+        { path: '/goals', element: <Goals /> },
       ],
     },
   ]);
