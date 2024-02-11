@@ -1,12 +1,28 @@
 export const addToReadingList = (book) => {
-  const existingList = JSON.parse(localStorage.getItem('readingList')) || [];
+  const existingList = JSON.parse(localStorage.getItem('@readingList')) || [];
 
   const isBookAlreadyAdded = existingList.some((list) => list.id === book.id);
 
   if (!isBookAlreadyAdded) {
-    existingList.push(book);
+    const bookToAdd = { ...book, status: 'Not Started' };
+    existingList.push(bookToAdd);
 
-    localStorage.setItem('readingList', JSON.stringify(existingList));
+    localStorage.setItem('@readingList', JSON.stringify(existingList));
+
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const removeFromReadingList = (bookId) => {
+  const existingList = JSON.parse(localStorage.getItem('@readingList')) || [];
+  const bookIndex = existingList.findIndex((book) => book.id === bookId);
+
+  if (bookIndex !== -1) {
+    existingList.splice(bookIndex, 1);
+
+    localStorage.setItem('@readingList', JSON.stringify(existingList));
 
     return true;
   } else {
@@ -15,7 +31,7 @@ export const addToReadingList = (book) => {
 };
 
 export const getReadingList = () => {
-  const readingListString = localStorage.getItem('readingList');
+  const readingListString = localStorage.getItem('@readingList');
 
   const readingList = JSON.parse(readingListString) || [];
 
