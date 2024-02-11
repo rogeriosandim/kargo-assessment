@@ -8,7 +8,6 @@ const extraProps = (remove, id) => ({
 
 const SnackbarList = () => {
   const snackbars = useSnackbarList();
-  console.log(snackbars);
   const { remove } = useSnackbarActions();
 
   return (
