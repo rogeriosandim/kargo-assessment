@@ -7,7 +7,7 @@ import {
   Grid,
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import BookViewCard from '../components/BookViewCard';
+import BookViewCard from '../components/bookViewCard/BookViewCard';
 import api from '../services/api';
 
 const googleApiKey = 'AIzaSyAcjA7BW57ehcx-4_RHQNbSr1rrtWrdd-w';

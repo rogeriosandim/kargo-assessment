@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSnackbarActions } from '../../contexts/snackbar';
 import {
   Card,
   Collapse,
@@ -11,19 +12,21 @@ import {
   Tooltip,
 } from '@mui/material';
 import {
-  FavoriteOutlined as FavoriteIcon,
   ExpandMoreOutlined as ExpandMoreIcon,
   BookmarkAddOutlined as BookmarkAddIcon,
+  BookmarkRemoveOutlined as BookmarkRemoveIcon,
 } from '@mui/icons-material';
-import { addToReadingList } from '../helpers/localStorage';
+import {
+  addToReadingList,
+  removeFromReadingList,
+} from '../../helpers/localStorage';
+import { getStatusChip } from '../chipStatus/ChipStatus';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
-import { useSnackbarActions } from '../contexts/snackbar';
 
-const BookViewCard = ({ book }) => {
+const BookViewCard = ({ book, search = true }) => {
   const [expanded, setExpanded] = useState(false);
-  const [favourite, setFavourite] = useState(false);
   const parsedDescription = parse(`${book.volumeInfo.description}`);
   const snackbar = useSnackbarActions();
 
@@ -31,15 +34,20 @@ const BookViewCard = ({ book }) => {
     setExpanded(!expanded);
   };
 
-  const handleHeartClick = () => {
-    setFavourite(!favourite);
-  };
-
   const handleAddToReadingList = (event, addBook) => {
-    const bookAdded = addToReadingList(addBook);
-    bookAdded
+    const isBookAdded = addToReadingList(addBook);
+    isBookAdded
       ? snackbar.success('Book successfully added to your reading list!')
       : snackbar.info('This book already is in your reading list!');
+  };
+
+  const handleRemoveFromReadingList = (event, bookId) => {
+    const isBookRemoved = removeFromReadingList(bookId);
+    isBookRemoved
+      ? snackbar.success('Book successfully removed from your reading list!')
+      : snackbar.warning(
+          'Oops! Looks like this book has already been removed.'
+        );
   };
 
   return (
@@ -49,13 +57,25 @@ const BookViewCard = ({ book }) => {
         title={book.volumeInfo.title}
         subheader={book.volumeInfo.authors}
         action={
-          <Tooltip title='Add to Reading List'>
-            <IconButton
-              onClick={(event) => handleAddToReadingList(event, book)}
-            >
-              <BookmarkAddIcon />
-            </IconButton>
-          </Tooltip>
+          search ? (
+            <Tooltip title='Add to Reading List'>
+              <IconButton
+                color='secondary'
+                onClick={(event) => handleAddToReadingList(event, book)}
+              >
+                <BookmarkAddIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title='Remove from Reading List'>
+              <IconButton
+                color='secondary'
+                onClick={(event) => handleRemoveFromReadingList(event, book.id)}
+              >
+                <BookmarkRemoveIcon />
+              </IconButton>
+            </Tooltip>
+          )
         }
       />
       <CardMedia
@@ -64,15 +84,7 @@ const BookViewCard = ({ book }) => {
         image={`https://books.google.com/books/publisher/content/images/frontcover/${book.id}?fife=w325-h355&source=gbs_api`}
       />
       <CardActions disableSpacing>
-        <IconButton
-          className={clsx(styles.favourite, {
-            [styles.favouriteSet]: favourite,
-          })}
-          onClick={handleHeartClick}
-          aria-label='add to favourite'
-        >
-          <FavoriteIcon />
-        </IconButton>
+        {search ? '' : getStatusChip(book.status)}
         <IconButton
           className={clsx(styles.expand, {
             [styles.expandOpen]: expanded,

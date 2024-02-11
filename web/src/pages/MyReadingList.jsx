@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material';
-import BookViewCard from '../components/BookViewCard';
+import BookViewCard from '../components/bookViewCard/BookViewCard';
 import { getReadingList } from '../helpers/localStorage';
 
 const MyReadingList = () => {
@@ -16,7 +16,7 @@ const MyReadingList = () => {
             {readingList &&
               readingList.map((book) => (
                 <Grid key={book.id} item>
-                  <BookViewCard book={book} />
+                  <BookViewCard book={book} search={false} />
                 </Grid>
               ))}
           </Grid>
