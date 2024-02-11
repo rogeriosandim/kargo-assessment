@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -7,22 +7,14 @@ import {
   Grid,
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import api from '../services/api';
 import BookViewCard from '../components/BookViewCard';
+import api from '../services/api';
 
 const googleApiKey = 'AIzaSyAcjA7BW57ehcx-4_RHQNbSr1rrtWrdd-w';
 
 const Home = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState('');
-
-  const handleSearch = (event) => {
-    const query = event.target.value;
-    setSearchInputValue(query);
-    setSearchQuery(query);
-    fetchBooksData(query);
-  };
 
   const fetchBooksData = async (query) => {
     if (query) {
@@ -39,8 +31,15 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    const getData = setTimeout(() => {
+      fetchBooksData(searchInputValue);
+    }, 400);
+    return () => clearTimeout(getData);
+  }, [searchInputValue]);
+
   return (
-    <Box padding={2}>
+    <Box>
       <Typography variant='h4' gutterBottom>
         Search for a Book
       </Typography>
@@ -50,7 +49,7 @@ const Home = () => {
           helperText={
             searchInputValue === '' ? 'Type anything to search for a book!' : ''
           }
-          onChange={handleSearch}
+          onChange={(event) => setSearchInputValue(event.target.value)}
           value={searchInputValue}
           name='query'
           label='Search for anything'

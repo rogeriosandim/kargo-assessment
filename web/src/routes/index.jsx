@@ -1,23 +1,25 @@
 import { Outlet, useRoutes } from 'react-router-dom';
 import Home from '../pages/Home';
-import MyBooks from '../pages/MyBooks';
+import MyReadingList from '../pages/MyReadingList';
 import Header from '../layouts/Header';
+import Favourites from '../pages/Favourites';
 
 const Router = () => {
   const routes = useRoutes([
     {
       element: (
-        <Header >
+        <Header>
           <Outlet />
         </Header>
       ),
       children: [
         { element: <Home />, index: true },
-        { path:'/my-books', element: <MyBooks />}
-      ]
-    }
+        { path: '/my-reading-list', element: <MyReadingList /> },
+        { path: '/favourites', element: <Favourites /> },
+      ],
+    },
   ]);
- 
+
   return routes;
 };
 

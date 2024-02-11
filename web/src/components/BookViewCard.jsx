@@ -1,26 +1,31 @@
 import { useState } from 'react';
 import {
   Card,
+  Collapse,
   CardHeader,
   CardMedia,
   CardContent,
   CardActions,
   IconButton,
   Typography,
-  Collapse,
+  Tooltip,
 } from '@mui/material';
 import {
-  Favorite as FavoriteIcon,
-  ExpandMore as ExpandMoreIcon,
+  FavoriteOutlined as FavoriteIcon,
+  ExpandMoreOutlined as ExpandMoreIcon,
+  BookmarkAddOutlined as BookmarkAddIcon,
 } from '@mui/icons-material';
-import styles from './styles.module.scss';
+import { addToReadingList } from '../helpers/localStorage';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
+import styles from './styles.module.scss';
+import { useSnackbarActions } from '../contexts/snackbar';
 
 const BookViewCard = ({ book }) => {
   const [expanded, setExpanded] = useState(false);
   const [favourite, setFavourite] = useState(false);
   const parsedDescription = parse(`${book.volumeInfo.description}`);
+  const snackbar = useSnackbarActions();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -30,12 +35,28 @@ const BookViewCard = ({ book }) => {
     setFavourite(!favourite);
   };
 
+  const handleAddToReadingList = (event, addBook) => {
+    const bookAdded = addToReadingList(addBook);
+    bookAdded
+      ? snackbar.success('Book successfully added to your reading list!')
+      : snackbar.info('This book already is in your reading list!');
+  };
+
   return (
     <Card className={styles.card}>
       <CardHeader
         className={styles.header}
         title={book.volumeInfo.title}
         subheader={book.volumeInfo.authors}
+        action={
+          <Tooltip title='Add to Reading List'>
+            <IconButton
+              onClick={(event) => handleAddToReadingList(event, book)}
+            >
+              <BookmarkAddIcon />
+            </IconButton>
+          </Tooltip>
+        }
       />
       <CardMedia
         id='image'
