@@ -8,6 +8,7 @@ const statusColorMap = {
 
 const getChipStyles = ({ brand }) => {
   const defaultStyles = {
+    cursor: 'pointer',
     color: brand || '#000',
     backgroundColor: brand ? alpha(brand, 0.12) : 'transparent',
     borderColor: brand ? alpha(brand, 0.5) : alpha('#000', 0.75),
@@ -24,9 +25,17 @@ const ChipStatus = ({ ...props }) => {
   return <StyledChip {...props} />;
 };
 
-export const getStatusChip = (status) => {
+export const getStatusChip = (status, handleStatusUpdate) => {
   const brandColor = statusColorMap[status] || '#000';
-  return <ChipStatus label={status} brand={brandColor} variant='outlined' />;
+
+  return (
+    <ChipStatus
+      onClick={handleStatusUpdate}
+      label={status}
+      brand={brandColor}
+      variant='outlined'
+    />
+  );
 };
 
 export default ChipStatus;
