@@ -1,6 +1,6 @@
-import { Box, Button, Typography, Modal } from '@mui/material';
+import { useBook } from '../../contexts/books';
 import { useSnackbarActions } from '../../contexts/snackbar';
-import { updateBookStatusById } from '../../helpers/localStorage';
+import { Box, Button, Typography, Modal } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -19,6 +19,7 @@ const style = {
 
 const UpdateStatusModal = ({ open, setOpen, bookId }) => {
   const snackbar = useSnackbarActions();
+  const { updateBookStatusById } = useBook();
 
   const handleClose = () => setOpen(false);
 

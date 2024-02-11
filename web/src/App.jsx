@@ -4,14 +4,17 @@ import Router from './routes';
 import theme from './theme';
 import './assets/scss/index.scss';
 import { SnackBarProvider } from './contexts/snackbar';
+import { BookProvider } from './contexts/books';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <BookProvider>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </BookProvider>
       </SnackBarProvider>
     </ThemeProvider>
   );

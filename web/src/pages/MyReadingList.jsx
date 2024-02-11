@@ -1,9 +1,9 @@
+import { useBook } from '../contexts/books';
 import { Box, Grid, Typography } from '@mui/material';
 import BookViewCard from '../components/bookViewCard/BookViewCard';
-import { getReadingList } from '../helpers/localStorage';
 
 const MyReadingList = () => {
-  const readingList = getReadingList();
+  const { readingList } = useBook();
 
   return (
     <Box>

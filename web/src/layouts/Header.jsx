@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { useBook } from '../contexts/books';
 import {
   AppBar,
   Box,
@@ -13,13 +15,12 @@ import {
   MenuBookOutlined,
   TrackChangesOutlined,
 } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import kargoLogo from '../assets/images/KargoLogo.png';
-import { getReadingListQuantity } from '../helpers/localStorage';
 import SnackbarList from '../components/snackbar/SnackbarList';
+import kargoLogo from '../assets/images/KargoLogo.png';
 
 const Header = ({ children }) => {
-  const readingQuantity = getReadingListQuantity();
+  const { readingList } = useBook();
+
   return (
     <Box sx={{ flexGrow: 1, zIndex: -1 }}>
       <AppBar position='fixed'>
@@ -56,7 +57,7 @@ const Header = ({ children }) => {
             <Link to='/my-reading-list'>
               <IconButton size='large' aria-label='my books' color='inherit'>
                 <Tooltip title='My Reading List'>
-                  <Badge badgeContent={readingQuantity} color='error'>
+                  <Badge badgeContent={readingList.length} color='secondary'>
                     <MenuBookOutlined />
                   </Badge>
                 </Tooltip>

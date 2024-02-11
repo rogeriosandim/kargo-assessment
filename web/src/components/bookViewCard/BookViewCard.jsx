@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useBook } from '../../contexts/books';
 import { useSnackbarActions } from '../../contexts/snackbar';
 import {
   Box,
@@ -17,21 +18,18 @@ import {
   BookmarkAddOutlined as BookmarkAddIcon,
   BookmarkRemoveOutlined as BookmarkRemoveIcon,
 } from '@mui/icons-material';
-import {
-  addToReadingList,
-  removeFromReadingList,
-} from '../../helpers/localStorage';
+import UpdateStatusModal from '../updateStatusModal/UpdateStatusModal';
 import { getStatusChip } from '../chipStatus/ChipStatus';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
-import UpdateStatusModal from '../updateStatusModal/UpdateStatusModal';
 
 const BookViewCard = ({ book, search = true }) => {
   const [expanded, setExpanded] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const parsedDescription = parse(`${book.searchInfo?.textSnippet}`);
   const snackbar = useSnackbarActions();
+  const { addToReadingList, removeFromReadingList } = useBook();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
