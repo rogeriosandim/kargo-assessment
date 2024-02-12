@@ -13,7 +13,7 @@ const NoBookingListMessage = () => {
         Go search for books and add them to your reading list.
       </Typography>
       <Link to='/search-book'>
-        <Button variant='contained' color='primary'>
+        <Button variant='contained' color='secondary'>
           Go to Search
         </Button>
       </Link>
