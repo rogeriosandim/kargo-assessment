@@ -106,6 +106,7 @@ const Goals = () => {
             value={inputValues[goal.key]}
             onChange={(event) => handleInputChange(event, goal.key)}
             style={{ marginBottom: '20px' }}
+            type='number'
           />
           <Button
             variant='contained'
