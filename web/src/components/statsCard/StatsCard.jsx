@@ -2,7 +2,7 @@
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
-const DashboardCard = ({ title, total, books = false }) => {
+const StatsCard = ({ title, total, books = false }) => {
   const statusColorMap = {
     'In Progress': alpha('#0077FF', 0.45),
     Finished: alpha('#00FF77', 0.45),
@@ -23,4 +23,4 @@ const DashboardCard = ({ title, total, books = false }) => {
   );
 };
 
-export default DashboardCard;
+export default StatsCard;
