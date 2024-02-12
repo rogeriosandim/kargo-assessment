@@ -20,9 +20,9 @@ const GoalsCard = ({ title, current, goal, goalAchieved }) => {
           </Typography>
           <Typography variant='h4'>
             {goalAchieved
-              ? `${calculateTotal}  of ${goal}`
+              ? `${calculateTotal}  of ${goal} books`
               : goal
-              ? `${current} of ${goal}`
+              ? `${current} of ${goal} books`
               : current}
           </Typography>
         </CardContent>

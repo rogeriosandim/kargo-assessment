@@ -30,9 +30,9 @@ const MyReadingList = () => {
         My Reading List
       </Typography>
       {readingList.length ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Grid container justify='center' spacing={2}>
+            <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
               {readingList &&
                 readingList.map((book) => (
                   <Grid key={book.id} item>

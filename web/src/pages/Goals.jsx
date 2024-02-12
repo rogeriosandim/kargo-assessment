@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSnackbarActions } from '../contexts/snackbar';
-import { TextField, Button, Box, Paper, Typography } from '@mui/material';
+import { Grid, TextField, Button, Box, Card, Typography } from '@mui/material';
 
 const READING_PAGES_KEY = '@kargo:readingPagesGoal';
 const BOOKS_FINISHED_KEY = '@kargo:booksFinishedGoal';
@@ -83,43 +83,46 @@ const Goals = () => {
       <Typography variant='h4' gutterBottom>
         Set Your Goals
       </Typography>
-      {goals.map((goal, index) => (
-        <Paper
-          key={index}
-          sx={{
-            marginBottom: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            padding: 2,
-          }}
-        >
-          <Typography variant='h6' gutterBottom>
-            {goal.label}
-          </Typography>
-          <TextField
-            label='Enter your goal'
-            variant='outlined'
-            size='small'
-            name={goal.key}
-            value={inputValues[goal.key]}
-            onChange={(event) => handleInputChange(event, goal.key)}
-            style={{ marginBottom: '20px' }}
-            type='number'
-          />
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => handleSaveGoal(index)}
-          >
-            Save Goal
-          </Button>
-          <Typography variant='body1' mt={2}>
-            Your current Goal is: {goal.value}
-          </Typography>
-        </Paper>
-      ))}
+      <Grid container spacing={3}>
+        {goals.map((goal, index) => (
+          <Grid key={index} item xs={12} sm={6}>
+            <Card
+              sx={{
+                marginBottom: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                padding: 2,
+              }}
+            >
+              <Typography variant='h6' gutterBottom>
+                {goal.label}
+              </Typography>
+              <TextField
+                label='Enter your goal'
+                variant='outlined'
+                size='small'
+                name={goal.key}
+                value={inputValues[goal.key]}
+                onChange={(event) => handleInputChange(event, goal.key)}
+                style={{ marginBottom: '20px' }}
+                type='number'
+              />
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={() => handleSaveGoal(index)}
+              >
+                Save Goal
+              </Button>
+              <Typography variant='body1' mt={2}>
+                Your current Goal is: {goal.value}
+              </Typography>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };

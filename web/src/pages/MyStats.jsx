@@ -41,29 +41,29 @@ const MyStatus = () => {
 
   const pageCountByStatus = calculatePageCountByStatus(readingList);
 
-  const calculateAveragePages = (pageCounts) => {
-    let totalPages = 0;
-    let totalStatuses = 0;
+  const calculateAveragePages = (pageCounts, pagesReadingGoal) => {
+    const { totalPages, totalStatuses } = pageCounts.reduce(
+      (accumulator, { status, pages }) => {
+        if (status !== 'Finished') {
+          accumulator.totalPages += pages;
+          accumulator.totalStatuses += 1;
+        }
+        return accumulator;
+      },
+      { totalPages: 0, totalStatuses: 0 }
+    );
 
-    for (const item of pageCounts) {
-      if (item.status !== 'Finished') {
-        totalPages += item.pages;
-        totalStatuses += 1;
-      }
-    }
-
-    if (totalStatuses === 0) {
+    if (totalStatuses == 0 || pagesReadingGoal == 0) {
       return 0;
     }
 
-    const averagePages = (
-      totalPages /
-      (totalStatuses * pagesReadingGoal)
-    ).toFixed(2);
-    return parseFloat(averagePages);
+    return parseFloat((totalPages / pagesReadingGoal).toFixed(2));
   };
 
-  const averagePagesForGoal = calculateAveragePages(pageCountByStatus);
+  const averagePagesForGoal = calculateAveragePages(
+    pageCountByStatus,
+    pagesReadingGoal
+  );
 
   function calculateBooksToCompleteGoal(booksFinished, yearlyBooksGoal) {
     const currentProgress = yearlyBooksGoal - booksFinished;
@@ -104,7 +104,7 @@ const MyStatus = () => {
       </Typography>
       <Grid container spacing={3}>
         <GoalsCard
-          title={`Average daily pages left to read. Your daily goal is ${pagesReadingGoal} pages.`}
+          title={`Days to finish remaining pages with a ${pagesReadingGoal}-page daily goal.`}
           current={averagePagesForGoal}
         />
         <GoalsCard

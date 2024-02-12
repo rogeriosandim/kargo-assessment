@@ -85,7 +85,7 @@ const Home = () => {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Grid container justify='center' spacing={2}>
+          <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
             {searchResults &&
               searchResults.map((book, index) => (
                 <Grid key={index} item>
