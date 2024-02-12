@@ -3,12 +3,12 @@
 Introducing a completed service that empowers clients to effortlessly manage their reading lists. This service seamlessly integrates essential functionalities, inspired by the acclaimed Basmo app.
 ## Demo
 
-https://kargo-assessment.netlify.app
+<a href="https://kargo-assessment.netlify.app" target="_blank" rel="noopener noreferrer">Kargo Assessment - DEMO</a>
 
 ## Features
 
 - Search for any book by title.
-    - Integrate with [Google Book API](https://developers.google.com/books)
+    - Integrate with <a href="https://developers.google.com/books" target="_blank" rel="noopener noreferrer">Google Book API</a>
 - Pagination on the search.
 - Manage a Reading list.
     - Add books to the  Reading list.
