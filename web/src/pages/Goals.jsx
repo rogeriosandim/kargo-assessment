@@ -76,12 +76,12 @@ const Goals = () => {
       const existingValue = getFromLocalStorage(key, value);
       saveToLocalStorage(key, existingValue);
     });
-  }, []);
+  });
 
   return (
     <Box>
       <Typography variant='h4' gutterBottom>
-        Goals
+        Set Your Goals
       </Typography>
       {goals.map((goal, index) => (
         <Paper
