@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
   Box,
+  Grid,
+  CircularProgress,
   Typography,
   TextField,
   InputAdornment,
-  Grid,
+  Stack,
+  Pagination,
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import BookViewCard from '../components/bookViewCard/BookViewCard';
@@ -15,15 +18,28 @@ const googleApiKey = 'AIzaSyAcjA7BW57ehcx-4_RHQNbSr1rrtWrdd-w';
 const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalItems, setTotalItems] = useState();
+  const [loading, setLoading] = useState(false);
+  const maxResults = 40;
 
-  const fetchBooksData = async (query) => {
+  const fetchBooksData = async (query, page) => {
     if (query) {
       try {
+        setLoading(true);
         const response = await api.get(
-          `/volumes?q=${query}&key=${googleApiKey}&maxResults=40`
+          `/volumes?q=intitle:${query}&key=${googleApiKey}&maxResults=${maxResults}&startIndex=${
+            page - 1
+          }`
         );
-        setSearchResults(response.data.items);
+        setTotalItems(Math.ceil(response.data.totalItems / maxResults));
+        setSearchResults((prevResults) => [
+          ...prevResults,
+          ...response.data.items,
+        ]);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         return error;
       }
     } else {
@@ -31,23 +47,25 @@ const Home = () => {
     }
   };
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
   useEffect(() => {
     const getData = setTimeout(() => {
-      fetchBooksData(searchInputValue);
+      fetchBooksData(searchInputValue, page);
     }, 400);
     return () => clearTimeout(getData);
-  }, [searchInputValue]);
+  }, [searchInputValue, page]);
 
   return (
     <Box>
-      <Typography variant='h4' gutterBottom>
-        Search for a Book
-      </Typography>
+      <Typography variant='h4'>Search for a Book</Typography>
       <Box padding={1}>
         <TextField
           type='text'
           helperText={
-            searchInputValue === '' ? 'Type anything to search for a book!' : ''
+            searchInputValue === '' ? 'Type to search for a book!' : ''
           }
           onChange={(event) => setSearchInputValue(event.target.value)}
           value={searchInputValue}
@@ -69,14 +87,31 @@ const Home = () => {
         <Grid item xs={12}>
           <Grid container justify='center' spacing={2}>
             {searchResults &&
-              searchResults.map((book) => (
-                <Grid key={book.id} item>
+              searchResults.map((book, index) => (
+                <Grid key={index} item>
                   <BookViewCard book={book} />
                 </Grid>
               ))}
           </Grid>
         </Grid>
       </Grid>
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', margin: 2 }}>
+          <CircularProgress />
+        </Box>
+      )}
+      {totalItems && (
+        <Stack
+          spacing={2}
+          sx={{ alignItems: 'center', marginTop: 2, marginBottom: 1 }}
+        >
+          <Pagination
+            count={totalItems}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
+      )}
     </Box>
   );
 };
